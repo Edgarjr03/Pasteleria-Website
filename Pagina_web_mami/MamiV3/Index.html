@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pastelería — Haz tu pedido</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- ENCABEZADO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-icon">🎂</span>
+        <div>
+          <h1 class="brand-name" id="shop-name">Pastelería Dulce</h1>
+          <p class="brand-tagline" id="shop-tagline">Hecho con amor, entregado con cariño</p>
+        </div>
+      </div>
+      <a class="whatsapp-btn" id="contact-wa" href="#" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <span id="contact-phone">Llámanos</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero-section">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Pedidos en línea</p>
+      <h2 class="hero-title">¿Qué te <em>antoja</em> hoy?</h2>
+      <p class="hero-sub">Selecciona tu postre, personalízalo y cuéntanos cómo lo quieres.</p>
+    </div>
+    <div class="hero-petals">
+      <span style="--d:0s;--x:10%;--s:.7">🌸</span>
+      <span style="--d:.4s;--x:30%;--s:1">🌸</span>
+      <span style="--d:.9s;--x:55%;--s:.8">🌷</span>
+      <span style="--d:1.3s;--x:75%;--s:.6">🌸</span>
+      <span style="--d:.2s;--x:90%;--s:.9">🌷</span>
+    </div>
+  </section>
+
+  <!-- MENÚ DE POSTRES -->
+  <section class="menu-section">
+    <div class="section-label">— Nuestro menú —</div>
+    <div class="postres-grid" id="postres-grid">
+      <!-- Se carga con JS -->
+    </div>
+  </section>
+
+  <!-- CONFIGURADOR (aparece al seleccionar un postre) -->
+  <section class="configurador-section hidden" id="configurador">
+    <div class="config-inner">
+
+      <!-- VISTA PREVIA -->
+      <div class="preview-panel">
+        <div class="preview-frame">
+          <div class="preview-placeholder" id="preview-placeholder">
+            <span>🎂</span>
+            <p>Tu pastel aparecerá aquí</p>
+          </div>
+          <img id="preview-img" src="" alt="Vista previa del pastel" class="preview-img hidden"/>
+          <div class="preview-combo-msg hidden" id="preview-combo-msg">
+            <div class="combo-msg-icon">🎉</div>
+            <p class="combo-msg-titulo">¡Felicidades!</p>
+            <p class="combo-msg-texto">Has descubierto una nueva combinación que agregaremos en el futuro</p>
+            <div class="combo-msg-estrellas">✨🎂✨</div>
+          </div>
+          <div class="flavor-tags" id="flavor-tags"></div>
+        </div>
+        <div class="preview-name" id="preview-name"></div>
+        <div class="preview-price" id="preview-price"></div>
+      </div>
+
+      <!-- CONTROLES -->
+      <div class="config-panel">
+        <h3 class="config-title">Personaliza tu <em id="config-postre-nombre">pastel</em></h3>
+        <div id="config-fields">
+          <!-- Se genera dinámicamente según el postre -->
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FORMULARIO DE PEDIDO -->
+  <section class="order-section" id="order-section">
+    <div class="order-inner">
+      <div class="section-label">— Tu pedido —</div>
+      <h2 class="order-title">Completa tu <em>solicitud</em></h2>
+
+      <div class="order-form">
+
+        <div class="form-row">
+          <div class="field">
+            <label for="f-nombre">Nombre completo</label>
+            <input type="text" id="f-nombre" placeholder="¿Cómo te llamamos?" autocomplete="name"/>
+          </div>
+          <div class="field">
+            <label for="f-telefono">Número de teléfono / WhatsApp</label>
+            <input type="tel" id="f-telefono" placeholder="871 514 5636" autocomplete="tel"/>
+          </div>
+        </div>
+
+        <!-- CARRITO -->
+        <div class="carrito-section">
+          <div class="carrito-header-row">
+            <label class="carrito-label">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              Tu carrito
+            </label>
+            <button class="agregar-btn" id="agregar-btn" onclick="agregarAlCarrito()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Agregar al carrito
+            </button>
+          </div>
+
+          <!-- Tabla vacía placeholder -->
+          <div class="carrito-empty" id="carrito-empty">
+            <span>🛒</span>
+            <p>Selecciona un postre del menú y presiona <strong>Agregar al carrito</strong></p>
+          </div>
+
+          <!-- Tabla de ítems -->
+          <div class="carrito-table-wrap hidden" id="carrito-table-wrap">
+            <table class="carrito-table">
+              <thead>
+                <tr>
+                  <th>Postre</th>
+                  <th>Sabores</th>
+                  <th class="col-cant">Cant.</th>
+                  <th class="col-precio">Precio</th>
+                  <th class="col-acciones"></th>
+                </tr>
+              </thead>
+              <tbody id="carrito-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TOTAL -->
+        <div class="total-box hidden" id="total-box">
+          <div class="total-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            Total a pagar
+          </div>
+          <div class="total-amount" id="total-amount">$0.00</div>
+        </div>
+
+        <div class="field">
+          <label for="f-notas">Mensaje especial <span class="optional">(opcional)</span></label>
+          <textarea id="f-notas" rows="3" placeholder="Decoraciones, fecha de entrega, dirección, alergias, mensaje en el pastel..."></textarea>
+        </div>
+
+        <button class="send-btn" id="send-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Enviar pedido por WhatsApp
+        </button>
+
+        <p class="send-note">Al presionar el botón se abrirá WhatsApp con tu pedido ya escrito.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL EDITAR ÍTEM -->
+  <div class="modal-overlay hidden" id="modal-editar">
+    <div class="modal-card modal-card-sm">
+      <button class="modal-close" id="modal-editar-close">✕</button>
+      <div class="modal-header">
+        <p class="modal-eyebrow">Editar ítem</p>
+        <h3 class="modal-title" id="modal-editar-titulo">Pastel</h3>
+      </div>
+      <div id="modal-editar-fields"></div>
+      <div style="display:flex;gap:12px;margin-top:1.5rem;">
+        <button class="nosotros-btn" style="flex:1;justify-content:center;" onclick="guardarEdicion()">Guardar cambios</button>
+        <button class="modal-close-btn" onclick="cerrarModalEditar()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN NOSOTROS -->
+  <section class="nosotros-section">
+    <div class="nosotros-inner">
+      <div class="section-label">— Detrás del sabor —</div>
+      <h2 class="nosotros-title">Las personas detrás de <em>cada postre</em></h2>
+      <p class="nosotros-sub">Conoce al equipo que hace posible cada antojo.</p>
+      <button class="nosotros-btn" id="nosotros-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Conocer al equipo
+      </button>
+    </div>
+  </section>
+
+  <!-- MODAL NOSOTROS -->
+  <div class="modal-overlay hidden" id="modal-nosotros">
+    <div class="modal-card">
+      <button class="modal-close" id="modal-close" aria-label="Cerrar">✕</button>
+      <div class="modal-header">
+        <p class="modal-eyebrow">Nuestro equipo</p>
+        <h3 class="modal-title">Con <em>amor</em> y dedicación</h3>
+      </div>
+      <div class="personas-grid">
+
+        <!-- Persona 1: La emprendedora -->
+        <div class="persona-card">
+          <div class="persona-avatar emprendedora" style="overflow:hidden;padding:0;">
+        <img src="mami.jpeg" alt="Mamá" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>
+          </div>
+          <div class="persona-info">
+            <span class="persona-rol">La Emprendedora</span>
+            <h4 class="persona-nombre">Rosa Ofelia Cardenas Rodriguez</h4>
+            <p class="persona-desc">
+              Con años de pasión por la repostería y el amor que pone en cada receta, ella es el corazón de este negocio. Cada pastel, cada postre, lleva su sazón especial y el cariño de toda una vida dedicada a endulzar momentos.
+            </p>
+            <div class="persona-tag">🎂 La que hornea con el alma</div>
+          </div>
+        </div>
+
+        <div class="personas-divider"></div>
+
+        <!-- Persona 2: El programador -->
+        <div class="persona-card">
+          <div class="persona-avatar programador" style="overflow:hidden;padding:0;">
+            <img src="yo.jpeg" alt="El hijo" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>
+          </div>
+          <div class="persona-info">
+            <span class="persona-rol">El Programador</span>
+            <h4 class="persona-nombre">Edgar De Santiago Cardenas</h4>
+            <p class="persona-desc">
+              Diseñó y desarrolló esta página con todo el cariño para apoyar el sueño de su mamá. Detrás de cada botón y cada pantalla hay horas de trabajo dedicadas a que tu experiencia sea fácil, bonita y rápida.
+            </p>
+            <div class="persona-tag">💻 El que lleva el negocio a internet</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p>Hecho con 💗 · <span id="footer-phone"></span></p>
+    <p class="footer-admin"><a href="IndexAdmin.html">⚙ Administrar</a></p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="Script.js"></script>
+  <script>
+    const btnNosotros = document.getElementById('nosotros-btn');
+    const modalNosotros = document.getElementById('modal-nosotros');
+    const btnClose = document.getElementById('modal-close');
+
+    btnNosotros.addEventListener('click', () => {
+      modalNosotros.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    });
+
+    function cerrarModal() {
+      modalNosotros.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    btnClose.addEventListener('click', cerrarModal);
+    modalNosotros.addEventListener('click', (e) => {
+      if (e.target === modalNosotros) cerrarModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') cerrarModal();
+    });
+  </script>
+</body>
+</html>

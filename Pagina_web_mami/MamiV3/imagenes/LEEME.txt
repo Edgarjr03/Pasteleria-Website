@@ -1,0 +1,20 @@
+=== CARPETA DE IMÁGENES ===
+
+Pon aquí todas tus fotos de pasteles y postres.
+
+Nombres sugeridos según data.js:
+  mojadito.jpg                    → foto del mojadito
+  pastel_cumple.jpg               → foto del pastel de cumpleaños
+  cupcakes.jpg                    → foto de los cupcakes
+  vainilla.jpg                    → pastel sabor vainilla
+  chocolate.jpg                   → pastel sabor chocolate
+  fresa.jpg                       → pastel sabor fresa
+  cajeta.jpg                      → pastel sabor cajeta
+  combo_vainilla_chocolate.jpg    → pastel mitad vainilla mitad chocolate
+  combo_vainilla_fresa.jpg        → pastel mitad vainilla mitad fresa
+  combo_chocolate_fresa.jpg       → pastel mitad chocolate mitad fresa
+
+Luego abre data.js y pon la ruta en el campo imagen:
+  imagen: 'imagenes/mojadito.jpg'
+
+Tamaño recomendado: 800x800 px, formato JPG o WebP, máx 2MB.

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Admin — Pastelería</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="StyleAdmin.css"/>
+</head>
+<body class="admin-body">
+
+  <div class="admin-wrapper">
+    <aside class="admin-sidebar">
+      <div class="admin-logo">
+        <span>🎂</span>
+        <span>Panel Admin</span>
+      </div>
+      <nav class="admin-nav">
+        <button class="admin-nav-btn active" data-tab="config">⚙ Configuración</button>
+        <button class="admin-nav-btn" data-tab="postres">🍰 Postres</button>
+        <button class="admin-nav-btn" data-tab="sabores">🎨 Sabores</button>
+        <button class="admin-nav-btn" data-tab="guia">📷 Guía de imágenes</button>
+      </nav>
+      <a href="index.html" class="admin-preview-link">← Ver página del cliente</a>
+    </aside>
+
+    <main class="admin-main">
+      <a href="Index.html" class="admin-back-mobile">← Ver página del cliente</a>
+
+      <!-- ====== TAB: CONFIGURACIÓN ====== -->
+      <div class="admin-tab active" id="tab-config">
+        <div class="admin-header">
+          <h2>Configuración general</h2>
+          <p>Datos de tu negocio que aparecen en la página</p>
+        </div>
+
+        <div class="admin-card">
+          <div class="a-field">
+            <label>Nombre de la pastelería</label>
+            <input type="text" id="cfg-nombre" placeholder="Ej. Pastelería Dulce Mamá"/>
+          </div>
+          <div class="a-field">
+            <label>Slogan</label>
+            <input type="text" id="cfg-slogan" placeholder="Ej. Hecho con amor, entregado con cariño"/>
+          </div>
+          <div class="a-field">
+            <label>Número de WhatsApp (con código de país, sin espacios)</label>
+            <input type="text" id="cfg-whatsapp" placeholder="521234567890"/>
+            <span class="a-hint">Ejemplo: 521234567890 (52 = México, luego el número de 10 dígitos)</span>
+          </div>
+          <button class="a-btn-primary" id="guardar-config">Guardar configuración</button>
+          <div class="a-success hidden" id="config-ok">✅ Configuración guardada</div>
+        </div>
+      </div>
+
+      <!-- ====== TAB: POSTRES ====== -->
+      <div class="admin-tab" id="tab-postres">
+        <div class="admin-header">
+          <h2>Postres del menú</h2>
+          <p>Agrega, edita o desactiva los postres que ofreces</p>
+        </div>
+
+        <div class="admin-card">
+          <h3 class="a-section-title">Agregar nuevo postre</h3>
+
+          <div class="a-form-grid">
+            <div class="a-field">
+              <label>Nombre del postre</label>
+              <input type="text" id="np-nombre" placeholder="Ej. Pastel de cumpleaños"/>
+            </div>
+            <div class="a-field">
+              <label>Descripción corta</label>
+              <input type="text" id="np-desc" placeholder="Ej. Esponjoso y decorado a mano"/>
+            </div>
+            <div class="a-field">
+              <label>Precio base (MXN)</label>
+              <input type="number" id="np-precio" placeholder="350" min="0"/>
+            </div>
+            <div class="a-field">
+              <label>Emoji decorativo</label>
+              <input type="text" id="np-emoji" placeholder="🎂" maxlength="4"/>
+            </div>
+          </div>
+
+          <div class="a-field">
+            <label>¿Tiene selección de sabores?</label>
+            <div class="a-toggle-row">
+              <label class="toggle">
+                <input type="checkbox" id="np-tiene-sabores" checked/>
+                <span class="toggle-slider"></span>
+              </label>
+              <span class="toggle-label">Sí, tiene sabores personalizables</span>
+            </div>
+          </div>
+
+          <div id="np-sabores-config">
+            <div class="a-field">
+              <label>Número de sabores a elegir</label>
+              <select id="np-num-sabores">
+                <option value="1">1 sabor</option>
+                <option value="2" selected>2 sabores</option>
+                <option value="3">3 sabores</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="a-field">
+            <label>Imagen por defecto del postre</label>
+            <div class="img-upload-zone" id="np-img-zone">
+              <input type="file" id="np-img" accept="image/*" class="img-input"/>
+              <div class="img-upload-label">
+                <span>📷</span>
+                <p>Haz clic para subir imagen, o arrastra aquí</p>
+                <span class="a-hint">JPG, PNG o WebP · máx. 2MB</span>
+              </div>
+              <img id="np-img-preview" class="img-preview hidden" alt="preview"/>
+              <button type="button" class="img-remove-btn hidden" onclick="quitarImagen('np-img-preview','np-img-zone','np-img')">✕ Quitar imagen</button>
+            </div>
+          </div>
+
+          <button class="a-btn-primary" id="agregar-postre">+ Agregar al menú</button>
+          <div class="a-success hidden" id="postre-ok">✅ Postre agregado al menú</div>
+        </div>
+
+        <div class="admin-card" style="margin-top:1.5rem">
+          <h3 class="a-section-title">Postres actuales</h3>
+          <div id="postres-list"></div>
+        </div>
+      </div>
+
+      <!-- ====== TAB: SABORES ====== -->
+      <div class="admin-tab" id="tab-sabores">
+        <div class="admin-header">
+          <h2>Catálogo de sabores</h2>
+          <p>Administra los sabores disponibles y sus imágenes</p>
+        </div>
+
+        <div class="admin-card">
+          <h3 class="a-section-title">Agregar sabor</h3>
+          <div class="a-form-grid">
+            <div class="a-field">
+              <label>Nombre del sabor</label>
+              <input type="text" id="ns-nombre" placeholder="Ej. Fresa, Chocolate, Vainilla..."/>
+            </div>
+            <div class="a-field">
+              <label>Color representativo</label>
+              <input type="color" id="ns-color" value="#f472b6"/>
+            </div>
+          </div>
+
+          <div class="a-field">
+            <label>Imagen del pastel con este sabor <span class="a-hint">(opcional)</span></label>
+            <div class="img-upload-zone" id="ns-img-zone">
+              <input type="file" id="ns-img" accept="image/*" class="img-input"/>
+              <div class="img-upload-label">
+                <span>🍰</span>
+                <p>Foto del pastel con este sabor</p>
+                <span class="a-hint">Esta imagen se mostrará cuando el cliente elija este sabor</span>
+              </div>
+              <img id="ns-img-preview" class="img-preview hidden" alt="preview"/>
+              <button type="button" class="img-remove-btn hidden" onclick="quitarImagen('ns-img-preview','ns-img-zone','ns-img')">✕ Quitar imagen</button>
+            </div>
+          </div>
+
+          <button class="a-btn-primary" id="agregar-sabor">+ Agregar sabor</button>
+          <div class="a-success hidden" id="sabor-ok">✅ Sabor agregado</div>
+        </div>
+
+        <div class="admin-card" style="margin-top:1.5rem">
+          <h3 class="a-section-title">Sabores disponibles</h3>
+          <div class="sabores-chips" id="sabores-list"></div>
+        </div>
+
+        <!-- COMBINACIONES -->
+        <div class="admin-card" style="margin-top:1.5rem">
+          <h3 class="a-section-title">🎨 Imágenes por combinación</h3>
+          <p style="font-size:.84rem;color:var(--text-muted);margin-bottom:1.25rem;line-height:1.6">
+            Cuando el cliente elige <strong>2 sabores</strong>, puedes mostrar una imagen especial.
+            Ejemplo: Vainilla + Chocolate → foto del pastel mitad y mitad.
+          </p>
+
+          <div class="a-field">
+            <label>Selecciona los sabores de la combinación</label>
+            <div id="combo-checks" class="combo-checks"></div>
+          </div>
+
+          <div class="a-field">
+            <label>Imagen para esta combinación</label>
+            <div class="img-upload-zone" id="combo-img-zone">
+              <input type="file" id="combo-img" accept="image/*" class="img-input"/>
+              <div class="img-upload-label">
+                <span>🍰</span>
+                <p>Foto del pastel con esta combinación de sabores</p>
+                <span class="a-hint">Se mostrará cuando elijan exactamente estos sabores juntos</span>
+              </div>
+              <img id="combo-img-preview" class="img-preview hidden" alt="preview"/>
+              <button type="button" class="img-remove-btn hidden" onclick="quitarImagen('combo-img-preview','combo-img-zone','combo-img')">✕ Quitar imagen</button>
+            </div>
+          </div>
+
+          <button class="a-btn-primary" id="agregar-combo">+ Guardar combinación</button>
+          <div class="a-success hidden" id="combo-ok">✅ Combinación guardada</div>
+        </div>
+
+        <div class="admin-card" style="margin-top:1.5rem">
+          <h3 class="a-section-title">Combinaciones guardadas</h3>
+          <div id="combos-list"></div>
+        </div>
+      </div>
+
+      <!-- ====== TAB: GUÍA DE IMÁGENES ====== -->
+      <div class="admin-tab" id="tab-guia">
+        <div class="admin-header">
+          <h2>📷 Guía para subir imágenes</h2>
+          <p>Cómo agregar tus fotos reales a la página</p>
+        </div>
+
+        <div class="admin-card guia-card">
+          <h3>Opción 1 — Imágenes subidas desde aquí (recomendada)</h3>
+          <p>Cuando subes una imagen en la sección de <strong>Postres</strong> o <strong>Sabores</strong>, la imagen se guarda directamente en el navegador. Funciona sin necesidad de archivos externos.</p>
+          <div class="guia-step">
+            <span class="step-num">1</span>
+            <span>Ve a la pestaña <strong>Postres</strong> o <strong>Sabores</strong></span>
+          </div>
+          <div class="guia-step">
+            <span class="step-num">2</span>
+            <span>Haz clic en la zona de subida de imagen</span>
+          </div>
+          <div class="guia-step">
+            <span class="step-num">3</span>
+            <span>Selecciona la foto desde tu computadora o celular</span>
+          </div>
+          <div class="guia-step">
+            <span class="step-num">4</span>
+            <span>Guarda — la imagen aparecerá en la página del cliente automáticamente</span>
+          </div>
+        </div>
+
+        <div class="admin-card guia-card" style="margin-top:1rem">
+          <h3>Opción 2 — Poner imágenes en la carpeta del proyecto</h3>
+          <p>Si prefieres guardar las fotos como archivos:</p>
+          <div class="guia-step">
+            <span class="step-num">1</span>
+            <span>Crea una carpeta llamada <code>imagenes</code> dentro de tu carpeta del proyecto</span>
+          </div>
+          <div class="guia-step">
+            <span class="step-num">2</span>
+            <span>Copia tus fotos ahí. Nómbralas claro: <code>pastel-fresa.jpg</code>, <code>pastel-chocolate.jpg</code></span>
+          </div>
+          <div class="guia-step">
+            <span class="step-num">3</span>
+            <span>En el campo de imagen del sabor, en lugar de subir, escribe la ruta: <code>imagenes/pastel-fresa.jpg</code></span>
+          </div>
+          <div class="guia-step">
+            <span class="step-num">4</span>
+            <span>Cuando subas a Firebase, sube también la carpeta <code>imagenes</code></span>
+          </div>
+          <div class="guia-nota">
+            💡 <strong>Consejo:</strong> Las fotos deben ser cuadradas (1:1) para verse mejor. Tamaño recomendado: 800x800 px.
+          </div>
+        </div>
+
+        <div class="admin-card guia-card" style="margin-top:1rem">
+          <h3>Tamaños y formatos recomendados</h3>
+          <table class="guia-table">
+            <tr><th>Tipo</th><th>Tamaño</th><th>Formato</th></tr>
+            <tr><td>Foto del pastel base</td><td>800×800 px</td><td>JPG o WebP</td></tr>
+            <tr><td>Foto por sabor</td><td>800×800 px</td><td>JPG o WebP</td></tr>
+            <tr><td>Tamaño máximo</td><td colspan="2">2 MB por imagen</td></tr>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ====== PANTALLA DE PIN ====== -->
+  <div id="pin-overlay" class="pin-overlay">
+    <div class="pin-box">
+      <div class="pin-icon">🔐</div>
+      <h2 class="pin-title">Panel Administrador</h2>
+      <p class="pin-sub">Ingresa tu PIN para continuar</p>
+      <div class="pin-dots" id="pin-dots">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="pin-grid">
+        <button class="pin-key" onclick="pinPress('1')">1</button>
+        <button class="pin-key" onclick="pinPress('2')">2</button>
+        <button class="pin-key" onclick="pinPress('3')">3</button>
+        <button class="pin-key" onclick="pinPress('4')">4</button>
+        <button class="pin-key" onclick="pinPress('5')">5</button>
+        <button class="pin-key" onclick="pinPress('6')">6</button>
+        <button class="pin-key" onclick="pinPress('7')">7</button>
+        <button class="pin-key" onclick="pinPress('8')">8</button>
+        <button class="pin-key" onclick="pinPress('9')">9</button>
+        <button class="pin-key pin-clear" onclick="pinClear()">⌫</button>
+        <button class="pin-key" onclick="pinPress('0')">0</button>
+        <button class="pin-key pin-enter" onclick="pinEnter()">✓</button>
+      </div>
+      <p class="pin-error hidden" id="pin-error">PIN incorrecto. Intenta de nuevo.</p>
+      <a href="Index.html" class="pin-back">← Regresar a la tienda</a>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="ScriptAdmin.js"></script>
+</body>
+</html>
